@@ -55,7 +55,6 @@ const userSchema = new mongoose.Schema({
   },
   salary: {
     type: Number,
-   
   },
   promotionDate: {
     type: Date,
