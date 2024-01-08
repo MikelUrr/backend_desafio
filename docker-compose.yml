@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  mongo_desafio_dev:
+  mongo_desafio:
     image: mongo
-    container_name: mongo_desafio_dev
+    container_name: mongo_desafio
     ports:
       - ${DB_PORT}:27017
     volumes:
@@ -12,12 +12,12 @@ services:
 
   node:
     build: .
-    container_name: mongo_desafio_dev
+    container_name: node_desafio
     # restart: always
     ports:
       - ${APP_PORT}:3000
     depends_on:
-      - mongo_desafio_dev
+      - mongo_desafio
     volumes:
       - .:/app
       - /app/node_modules
