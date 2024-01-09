@@ -1,3 +1,5 @@
+//userModel.js
+
 import mongoose from "mongoose";
 import mongodb from "../config/mongodb.js";
 
