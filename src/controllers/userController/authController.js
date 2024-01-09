@@ -8,7 +8,7 @@ dotenv.config();
 const login = async (req, res) => {
     try {
         const { email, password } = req.body; 
-        
+       
         const oldUser = await userModel.findOne({ email }); // Change here
         if (!oldUser) {
             res.status(404).json("User does not exist");
@@ -46,10 +46,13 @@ const login = async (req, res) => {
             result: {
                 firstLogin: oldUser.firstLogin,
                 email: oldUser.email,
-                id: oldUser._id
+                id: oldUser._id,
+                userType: oldUser.userType,
+
             },
             token
         });
+        
     } catch (e) {
         console.error(e);
         res.status(500).json("Error logging user");

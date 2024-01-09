@@ -31,5 +31,22 @@ const createUser = async (user) => {
         return false;
     }
 }
-export default updatePassword;
+
+const getUser = async (email) => {
+    
+    try {
+        const user= UserModel.findOne({email});
+        if(!user){
+            return false;
+        }
+        return user;
+    }
+    catch(e){
+        console.error(e);
+        return false;
+    }
+}
+
+
+export default {updatePassword, createUser, getUser};
 
