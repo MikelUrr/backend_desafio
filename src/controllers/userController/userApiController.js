@@ -1,6 +1,7 @@
 import userController from "./userController.js";
-
+import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
 
 const updatePassword = async (req,res) => {
@@ -24,4 +25,25 @@ const updatePassword = async (req,res) => {
     }
 }
 
-export default updatePassword;
+const getUser = async (req,res) => {
+    const token = req.headers.cookie.split("=")[1];
+    if (!token) {
+        res.status(401).json("You need to login");
+        return;
+    }
+    try {
+        const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+        const user = await userController.getUser(decoded.email);
+        if (!user) {
+            res.status(404).json("User does not exist");
+            return;
+        }
+        res.status(200).json(user);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json("Error getting user");
+    }
+
+}
+
+export default {updatePassword, getUser};
