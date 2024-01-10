@@ -16,6 +16,10 @@ router.post('/login', (req, res) => {
       authController.logout(req, res);
     });
 
+router.get('/info', (req, res) => {
+    userApiController.getUser(req, res);
+  });
+
 
   
 
