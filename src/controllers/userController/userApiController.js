@@ -30,7 +30,17 @@ const getUser = async (req,res) => {
         res.status(401).json("You need to login");
         return;
     }
-    const token = req.headers.cookie.split("=")[1]; 
+    
+    // Buscar la cookie llamada "token"
+    const tokenCookie = req.headers.cookie
+        .split('; ')
+        .find(cookie => cookie.startsWith('token='));
+    
+    if (!tokenCookie) {
+        res.status(401).json("Token not found in cookies");
+        return;
+    }
+    const token = tokenCookie.split('=')[1];
    
     try {
         
