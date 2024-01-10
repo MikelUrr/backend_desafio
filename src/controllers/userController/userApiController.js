@@ -26,12 +26,18 @@ const updatePassword = async (req,res) => {
 }
 
 const getUser = async (req,res) => {
-    const token = req.headers.cookie.split("=")[1];
-    if (!token) {
+    if (!req.headers.cookie) {
         res.status(401).json("You need to login");
         return;
     }
+    const token = req.headers.cookie.split("=")[1]; 
+   
     try {
+        
+        if (!token) {
+            res.status(401).json("You need to login");
+            return;
+        }
         const decoded = Jwt.verify(token, process.env.JWT_SECRET);
         const user = await userController.getUser(decoded.email);
         if (!user) {
