@@ -26,12 +26,28 @@ const updatePassword = async (req,res) => {
 }
 
 const getUser = async (req,res) => {
-    const token = req.headers.cookie.split("=")[1];
-    if (!token) {
+    if (!req.headers.cookie) {
         res.status(401).json("You need to login");
         return;
     }
+    
+    // Buscar la cookie llamada "token"
+    const tokenCookie = req.headers.cookie
+        .split('; ')
+        .find(cookie => cookie.startsWith('token='));
+    
+    if (!tokenCookie) {
+        res.status(401).json("Token not found in cookies");
+        return;
+    }
+    const token = tokenCookie.split('=')[1];
+   
     try {
+        
+        if (!token) {
+            res.status(401).json("You need to login");
+            return;
+        }
         const decoded = Jwt.verify(token, process.env.JWT_SECRET);
         const user = await userController.getUser(decoded.email);
         if (!user) {
