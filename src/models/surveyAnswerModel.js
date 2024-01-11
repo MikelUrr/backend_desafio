@@ -14,7 +14,7 @@ const surveyAnswerSchema = new mongoose.Schema({
         type: String,
     },
     answers: {
-        type: Array,
+        type: String,
     },
     comment: {
         type: String,

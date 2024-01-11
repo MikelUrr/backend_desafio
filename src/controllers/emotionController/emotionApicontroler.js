@@ -1,25 +1,28 @@
 import emotionController from "./emotionController.js";
 
 const getDayEmotions = async (req, res) => {
-    try {
-        
-        const emotions = await emotionController.getallEmotions();
-        if (!emotions) {
-            res.status(404).json("Emotions not found");
-            return;
-        }else{
-            const yesterdayEmotions = filteryesterday(emotions);
-          const {  entradaSalidaTotals, totalTotals } = calculateEmotionTotals(yesterdayEmotions);
-          
-            res.status(200).json({ entradaSalidaTotals, totalTotals}); 
-        }
-     
-        
-    } catch (e) {
-        console.error(e);
-        res.status(500).json("Error getting emotions");
+  try {
+    const emotions = await emotionController.getallEmotions();
+    if (!emotions) {
+      res.status(404).json("Emotions not found");
+      return;
+    } else {
+      const yesterdayEmotions = filteryesterday(emotions);
+      const {
+        porcentajesEntrada,
+        porcentajesSalida,
+        porcentajesTotal, 
+      } = calculateEmotionTotals(yesterdayEmotions);
+
+      res
+        .status(200)
+        .json({ porcentajesEntrada, porcentajesSalida, porcentajesTotal }); 
     }
-}
+  } catch (e) {
+    console.error(e);
+    res.status(500).json("Error getting emotions");
+  }
+};
 
 
 const getallEmotions = async (req, res) => {
@@ -67,7 +70,29 @@ const calculateEmotionTotals = (emotions) => {
         totalTotals[emotionType]++;
       }
     });
-    return { entradaSalidaTotals, totalTotals };
+
+
+ const dataEntrada = entradaSalidaTotals.Entrada 
+
+    const dataSalida = entradaSalidaTotals.Salida 
+    const dataTotal = totalTotals
+    const calculatePorcentajes = (data) => {
+      const total = Object.values(data).reduce((acc, value) => acc + value, 0);
+    
+      const porcentajes = {};
+    
+      Object.keys(data).forEach((emocion) => {
+        porcentajes[emocion] = ((data[emocion] / total) * 100).toFixed(0);
+      });
+    
+      return porcentajes;
+    };
+    
+    const porcentajesEntrada = calculatePorcentajes(dataEntrada);
+    const porcentajesSalida = calculatePorcentajes(dataSalida);
+    const porcentajesTotal = calculatePorcentajes(dataTotal);
+
+    return { porcentajesEntrada, porcentajesSalida, porcentajesTotal }; 
   };
   
   
