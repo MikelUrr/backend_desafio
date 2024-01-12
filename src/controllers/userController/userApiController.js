@@ -62,4 +62,24 @@ const getUser = async (req,res) => {
 
 }
 
-export default {updatePassword, getUser};
+const getIdFromToken = (cookies) => {
+    if (!cookies) {
+        
+        return false;
+    }
+    
+    // Buscar la cookie llamada "token"
+    const tokenCookie = cookies
+        .split('; ')
+        .find(cookie => cookie.startsWith('token='));
+    
+    if (!tokenCookie) {
+       
+        return false;
+    }
+    const token = tokenCookie.split('=')[1];
+    const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.id;
+}
+
+export default {updatePassword, getUser, getIdFromToken};

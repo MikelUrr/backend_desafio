@@ -32,7 +32,7 @@ const login = async (req, res) => {
         const token = Jwt.sign(
             { email: oldUser.email, id: oldUser._id }, 
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "23h" }
         );
         /* send token in a cookie */
         res.cookie("token", token, {

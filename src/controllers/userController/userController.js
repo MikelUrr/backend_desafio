@@ -47,6 +47,28 @@ const getUser = async (email) => {
     }
 }
 
+const getallUsers = async () => {
+    try {
+        const users = await UserModel.find().exec();
+    
+        return users;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
 
-export default {updatePassword, createUser, getUser};
+const getallUsersActive = async () => {
+    try {
+        const users = await UserModel.find({userActive:true}).exec();
+    
+        return users;
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+
+export default {updatePassword, createUser, getUser, getallUsers, getallUsersActive};
 
