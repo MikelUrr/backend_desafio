@@ -20,6 +20,10 @@ router.get('/info', (req, res) => {
     userApiController.getUser(req, res);
   });
 
+router.get('/all', (req, res) => {
+    userApiController.getallUsersActive(req, res);
+  }
+);
 
   
 

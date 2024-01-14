@@ -82,4 +82,22 @@ const getIdFromToken = (cookies) => {
     return decoded.id;
 }
 
-export default {updatePassword, getUser, getIdFromToken};
+
+const getallUsersActive = async (req,res) => {
+    try {
+        const users = await userController.getallUsersActive();
+        if (!users) {
+            res.status(404).json("Users not found");
+            return;
+        }
+
+  
+
+        res.status(200).json(users);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json("Error getting users");
+    }
+}
+
+export default {updatePassword, getUser, getIdFromToken, getallUsersActive};
