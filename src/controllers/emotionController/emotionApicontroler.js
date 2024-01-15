@@ -102,6 +102,21 @@ const calculateEmotionTotals = (emotions) => {
   return { porcentajesEntrada, porcentajesSalida, porcentajesTotal };
 };
 
+//remove all emotions
+
+const removeAllEmotions = async (req, res) => {
+  try {
+    const emotions = await emotionController.removeAllEmotions();
+    if (!emotions) {
+      res.status(404).json("Emotions not found");
+      return;
+    }
+    res.status(200).json(emotions);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json("Error getting emotions");
+  }
+}
 
 
-export default { getDayEmotions, getallEmotions };
+export default { getDayEmotions, getallEmotions, removeAllEmotions };

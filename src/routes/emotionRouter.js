@@ -13,4 +13,9 @@ router.get('/all', (req, res) => {
   }
 );
 
+router.post('/delete', (req, res) => {
+    emotionApicontroler.removeAllEmotions(req, res);
+  }
+);
+
 export default router;

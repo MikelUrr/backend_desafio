@@ -1,11 +1,13 @@
 import timekeepingController from "./timekeepingController.js";
 import userApiController from "../userController/userApiController.js";
 import userController  from "../userController/userController.js";
+import emotionController from "../emotionController/emotionController.js";
 
 const registerTimekeeping = async (req, res) => {
     try {
 
-        const { registerType } = req.body;
+        const  {registerType,  emotionType} = req.body;
+      
         if (!registerType) {
             res.status(400).json("registerType is required");
             return;
@@ -17,24 +19,31 @@ const registerTimekeeping = async (req, res) => {
         }
         const userIdRegister = await timekeepingController.getallTimekeepingByUserId(userId);
         const dateNow = new Date().getDay();
-        let duplicateRegistration = false;
-        userIdRegister.forEach(element => {
+        /* let duplicateRegistration = false; */
+        // userIdRegister.forEach(element => {
 
-            const dateRegister = new Date(element.date).getDay();
-            if (dateNow === dateRegister && element.registerType === registerType) {
-                duplicateRegistration = true;
-            }
-        });
-        if (duplicateRegistration) {
-            res.status(400).json("You have already registered today");
-            return;
-        }
+        //     const dateRegister = new Date(element.date).getDay();
+        //     /* if (dateNow === dateRegister && element.registerType === registerType) {
+        //         duplicateRegistration = true;
+        //     } */
+        // });
+        // if (duplicateRegistration) {
+        //     res.status(400).json("You have already registered today");
+        //     return;
+        // }
         const registerTime = getHour();
         const timekeeping = await timekeepingController.registerTimekeeping(userId, registerTime, registerType);
+        const checkRegister = await emotionController.getEmotionsByUserId(userId, registerType);
+        
+        if (!checkRegister) {
+            const registerEmotions = await emotionController.registerEmotion(userId, emotionType,registerType);
+         
+        }
         if (!timekeeping) {
             res.status(400).json("Error registering timekeeping");
             return;
         }
+            
         res.status(201).json(timekeeping);
     } catch (e) {
         console.error(e);
