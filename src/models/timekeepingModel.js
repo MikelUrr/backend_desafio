@@ -23,3 +23,5 @@ const timekeepingSchema = new mongoose.Schema({
 
 const timekeepingModel  = mongoose.model("timekeeping", timekeepingSchema);
 
+export {timekeepingModel};
+

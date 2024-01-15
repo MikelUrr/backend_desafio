@@ -62,4 +62,42 @@ const getUser = async (req,res) => {
 
 }
 
-export default {updatePassword, getUser};
+const getIdFromToken = (cookies) => {
+    if (!cookies) {
+        
+        return false;
+    }
+    
+    // Buscar la cookie llamada "token"
+    const tokenCookie = cookies
+        .split('; ')
+        .find(cookie => cookie.startsWith('token='));
+    
+    if (!tokenCookie) {
+       
+        return false;
+    }
+    const token = tokenCookie.split('=')[1];
+    const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.id;
+}
+
+
+const getallUsersActive = async (req,res) => {
+    try {
+        const users = await userController.getallUsersActive();
+        if (!users) {
+            res.status(404).json("Users not found");
+            return;
+        }
+
+  
+
+        res.status(200).json(users);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json("Error getting users");
+    }
+}
+
+export default {updatePassword, getUser, getIdFromToken, getallUsersActive};
