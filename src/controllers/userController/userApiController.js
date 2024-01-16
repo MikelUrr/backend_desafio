@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 
-const updatePassword = async (req,res) => {
+const updatePasswordUser = async (req,res) => {
     try {
         const {email, password, confirmPassword} = req.body;
         if (password && password !== confirmPassword) {
@@ -12,6 +12,7 @@ const updatePassword = async (req,res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await userController.updatePassword(email, hashedPassword)
+
         
         if(!user){
             res.status(404).json("User does not exist");
@@ -100,4 +101,4 @@ const getallUsersActive = async (req,res) => {
     }
 }
 
-export default {updatePassword, getUser, getIdFromToken, getallUsersActive};
+export default {updatePasswordUser, getUser, getIdFromToken, getallUsersActive};

@@ -2,13 +2,14 @@ import UserModel from "../../models/userModel.js"
 
 const updatePassword = async (email, password) => {
     try {
-    const user= UserModel.findOne({email});
+    const user= await UserModel.findOne({email});
     if(!user){
         return false;
     }
     user.password=password;
     user.firstLogin=false;
     await user.save();
+
     return true;
     }
     catch(e){

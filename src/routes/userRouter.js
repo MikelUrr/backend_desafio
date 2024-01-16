@@ -12,6 +12,10 @@ const router = Router();
 router.post('/login', (req, res) => {
     authController.login(req, res);
   });
+
+  router.put('/updatePassword', (req, res) => {
+    userApiController.updatePasswordUser(req, res);
+  });
   
     router.post('/logout', (req, res) => {
       authController.logout(req, res);
