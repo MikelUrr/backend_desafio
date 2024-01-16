@@ -69,6 +69,37 @@ const getallUsersActive = async () => {
     }
 }
 
+//get user by email
 
-export default {updatePassword, createUser, getUser, getallUsers, getallUsersActive};
+const getUserByEmail = async (email) => {
+    try{
+        const user= await UserModel.find({email:email}).exec();
+ 
+        if(!user){
+            return false;
+        }
+        return true;
+    }
+    catch(e){
+        console.error(e);
+        return false;
+    }
+}
+
+const getUserById = async (id) => {
+    try{
+        const user = await UserModel.findById(id);
+   
+        if(!user){
+            return false;
+        }
+        return user;
+    }
+    catch(e){
+        console.error(e);
+        return false;
+    }
+}
+
+export default {updatePassword, createUser, getUser, getallUsers, getallUsersActive, getUserById,getUserByEmail};
 

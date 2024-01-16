@@ -26,7 +26,7 @@ const updatePassword = async (req,res) => {
 }
 
 const getUser = async (req,res) => {
-    console.log(req.headers)
+    
     if (!req.headers.cookie) {
         res.status(401).json("You need to login");
         return;
@@ -101,4 +101,35 @@ const getallUsersActive = async (req,res) => {
     }
 }
 
-export default {updatePassword, getUser, getIdFromToken, getallUsersActive};
+
+
+const checkUserByEmail = async (email) => {
+    try{
+        const user= await userController.getUserByEmail(email);
+        
+        if(!user){
+            return false;
+        }
+        return user;
+    }
+    catch(e){
+        console.error(e);
+        return false;
+    }
+}
+
+const checkIsAdmin = async (id) => {
+    try{
+        const user = await userController.getUserById(id);
+        if(user.userType==="admin"){
+            return true;
+        }
+        return false;
+    }
+    catch(e){
+        console.error(e);
+        return false;
+    }
+}
+
+export default {updatePassword, getUser, getIdFromToken, getallUsersActive, checkIsAdmin, checkUserByEmail};

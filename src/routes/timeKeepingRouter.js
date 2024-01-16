@@ -11,7 +11,7 @@ router.post('/register', (req, res) => {
 
 );
 
-router.get('/today',authmiddleware.isAdmin, (req, res) => {
+router.get('/today',authmiddleware.isAdmin,  (req, res) => {
     timeKeepingApicontroller.getUserByTimeKeeping(req, res);
   }
 

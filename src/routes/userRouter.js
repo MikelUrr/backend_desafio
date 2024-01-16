@@ -21,7 +21,7 @@ router.get('/info', (req, res) => {
     userApiController.getUser(req, res);
   });
 
-router.get('/all', authmiddleware.isAdmin,(req, res) => {
+router.get('/all', authmiddleware.isAdmin, (req, res) => {
     userApiController.getallUsersActive(req, res);
   }
 );
