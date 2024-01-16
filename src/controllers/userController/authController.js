@@ -21,7 +21,6 @@ const login = async (req, res) => {
         }
       
         const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
-        console.log("holaaa",isPasswordCorrect)
         if (!isPasswordCorrect) {
             res.status(400).json("Invalid credentials");
             return;

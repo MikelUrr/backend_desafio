@@ -31,7 +31,6 @@ const getEmotionsByUserId = async (userId, registerTime) => {
     // filter by emotionType
     if (registerTime) {
       const filteredEmotions = userEmotions.filter((emotion) => {
-        console.log(emotion);
         return emotion.registerTime === registerTime;
       });
       /* console.log("filteredEmotions", filteredEmotions);
@@ -50,7 +49,6 @@ const getEmotionsByUserId = async (userId, registerTime) => {
 //register emotion  
 const registerEmotion = async (userId, emotionType, registerTime) => {
   try {
-    console.log("registerTime", userId, emotionType, registerTime);
     const emotion = new emotionModel({ userId, emotionType, registerTime });
     const emotionSaved = await emotion.save();
     return emotionSaved;
