@@ -26,6 +26,7 @@ const updatePassword = async (req,res) => {
 }
 
 const getUser = async (req,res) => {
+    console.log(req.headers)
     if (!req.headers.cookie) {
         res.status(401).json("You need to login");
         return;
