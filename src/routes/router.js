@@ -9,8 +9,8 @@ import authmiddleware from '../controllers/middlewares/authmiddleware.js';
 const router = Router();
 
 router.use ('/user', userRouter);
-router.use ('/emotion',authmiddleware.isLogin, emotionRouter);
-router.use ('/time',authmiddleware.isLogin, timeKeepingRouter);
+router.use ('/emotion', emotionRouter);
+router.use ('/time', timeKeepingRouter);
 
 
 export default router;
