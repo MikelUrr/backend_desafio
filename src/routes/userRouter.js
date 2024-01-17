@@ -26,6 +26,9 @@ router.get('/all', authmiddleware.isAdmin, (req, res) => {
   }
 );
 
-  
+router.put('/updatePassword', (req, res) => {
+  userApiController.updatePassword(req, res);
+}
+);
 
   export default router;

@@ -38,9 +38,7 @@ const isLogin = async (req, res, next) => {
             res.status(404).json("User does not exist");
             return;
         }
-        
-        // Agrega el usuario decodificado a la solicitud para que pueda ser utilizado en los controladores posteriores
-        req.user = decoded;
+      
         next();
     } catch (e) {
         console.error(e);
