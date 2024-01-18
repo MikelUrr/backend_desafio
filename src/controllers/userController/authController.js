@@ -24,6 +24,7 @@ const login = async (req, res) => {
         
         if (oldUser.firstLogin&&oldUser.userType==="user") {
             res.status(201).json("password needs to be changed");
+
             return;
         }
 

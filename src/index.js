@@ -24,7 +24,7 @@ const app = express();
 
 
  app.use(cors({
-    origin: ['https://mikelurrestarazu.com', 'http://localhost:5173', 'https://admin.mikelurrestarazu.com'],
+    origin: ['https://mikelurrestarazu.com', 'http://localhost:5173', 'https://admin.mikelurrestarazu.com','http://localhost:5174'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   }));
